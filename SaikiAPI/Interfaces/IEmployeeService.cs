@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SaikiAPI.EntityModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SaikiAPI.Interfaces
@@ -12,5 +13,7 @@ namespace SaikiAPI.Interfaces
         Task<ApplicationUser> GetUserData(string userId);
 
         bool UploadFile(IFormFile file);
+
+        IEnumerable<Employee> GetUserData(CursorParams cursorParams, out int? nextCursor);
     }
 }

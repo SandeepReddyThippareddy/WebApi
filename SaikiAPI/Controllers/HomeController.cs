@@ -118,9 +118,9 @@ namespace SaikiAPI.Controllers
         }
 
 
-        [HttpGet("GetUserData")]
+        [HttpGet("GetSpecificUserData")]
         [Authorize]
-        public async Task<IActionResult> GetUserData([FromQuery] string userId)
+        public async Task<IActionResult> GetSpecificUserData([FromQuery] string userId)
         {
             try
             {
@@ -128,6 +128,26 @@ namespace SaikiAPI.Controllers
                 return Ok(userData);
             }
             catch (Exception ex) when (ex.Message.Contains("User does not exists"))
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
+
+        [HttpGet("GetUserData")]
+        [Authorize]
+        public IActionResult GetUserData([FromQuery] CursorParams @params)
+        {
+            try
+            {
+                int? nextCursor = 0;
+                var userData = _employeeService.GetUserData(@params, out nextCursor);
+
+                Response.Headers.Add("X-Pagination", $"Next-Cursor = {nextCursor}");
+                return Ok(userData);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

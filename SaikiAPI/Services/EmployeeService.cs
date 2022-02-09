@@ -8,8 +8,10 @@ using Microsoft.IdentityModel.Tokens;
 using SaikiAPI.EntityModels;
 using SaikiAPI.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Text;
@@ -69,10 +71,30 @@ namespace SaikiAPI.Services
             }
         }
 
+        public IEnumerable<Employee> GetUserData(CursorParams cursorParams, out int? nextCursor)
+        {
+            var data = new List<Employee>()
+            {
+                new Employee() { EmpId = 1, EmpName = "Sandeep", Department = "IT", Designation = "SE", JoiningDate = DateTime.Now},
+                new Employee() { EmpId = 2, EmpName = "Sandeep", Department = "IT", Designation = "SE", JoiningDate = DateTime.Now},
+                new Employee() { EmpId = 3, EmpName = "Sandeep", Department = "IT", Designation = "SE", JoiningDate = DateTime.Now},
+                new Employee() { EmpId = 4, EmpName = "Sandeep", Department = "IT", Designation = "SE", JoiningDate = DateTime.Now}
+            };
+
+            var emp = data.OrderBy(x => x.EmpId).Where(x1 => x1.EmpId > cursorParams.Cursor)
+                          .Take(cursorParams.Count)
+                          .Select(x2 => x2);
+
+            nextCursor = emp.Any() ? emp.LastOrDefault()?.EmpId : 0;
+
+            return emp;
+
+        }
+
         private MemoryStream SerializeToStream(ApplicationUser applicationUser)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ApplicationUser));
-            MemoryStream stream = new MemoryStream() { Position = 0};
+            MemoryStream stream = new MemoryStream() { Position = 0 };
             try
             {
                 serializer.Serialize(stream, applicationUser);
@@ -85,18 +107,18 @@ namespace SaikiAPI.Services
         }
 
         public async Task<bool> UploadDataToAzure(string userId)
-        { 
+        {
             var user = await _userManager.FindByIdAsync(userId);
 
 
             var containerName = _configuration.GetSection("Blob:ContainerName").Value;
-            
+
 
             var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
             containerClient.CreateIfNotExists();
             //Delete if the BLOB is already eisting for the same user_id
             var bolbClient = containerClient.GetBlobClient(String.Format("{0}.xml", userId)).DeleteIfExists();
-           
+
             var streamedData = SerializeToStream(user);
             streamedData.Position = 0;
             var result = containerClient.UploadBlob(String.Format("{0}.xml", userId), streamedData, cancellationToken: System.Threading.CancellationToken.None);
@@ -173,11 +195,15 @@ namespace SaikiAPI.Services
         public bool UploadFile(IFormFile file)
         {
             var containerName = _configuration.GetSection("Blob:ContainerName").Value;
+
             var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+
             containerClient.CreateIfNotExists();
-            //Delete if the BLOB is already eisting for the same user_id
+
             containerClient.GetBlobClient(file.FileName).DeleteIfExists();
+
             var result = containerClient.UploadBlob(file.FileName, file.OpenReadStream());
+
             if (result.GetRawResponse().Status == 201 && string.Equals(result.GetRawResponse().ReasonPhrase, "Created", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
