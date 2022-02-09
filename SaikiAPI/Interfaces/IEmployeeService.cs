@@ -1,4 +1,5 @@
-﻿using SaikiAPI.EntityModels;
+﻿using Microsoft.AspNetCore.Http;
+using SaikiAPI.EntityModels;
 using System.Threading.Tasks;
 
 namespace SaikiAPI.Interfaces
@@ -8,7 +9,8 @@ namespace SaikiAPI.Interfaces
         Task<ApplicationUser> AuthenticateUser(UserCred userCred);
         Task<bool> UploadDataToAzure(string userId);
         string DownloadDataFromAzure(string userId);
-
         Task<ApplicationUser> GetUserData(string userId);
+
+        bool UploadFile(IFormFile file);
     }
 }

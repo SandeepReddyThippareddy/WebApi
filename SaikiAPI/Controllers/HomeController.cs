@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SaikiAPI.EntityModels;
 using SaikiAPI.Interfaces;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -14,12 +14,10 @@ namespace SaikiAPI.Controllers
     [Authorize]
     public class HomeController : ControllerBase
     {
-        private readonly WebApiContext _context;
         private readonly IEmployeeService _employeeService;
 
-        public HomeController(WebApiContext webApiContext, IEmployeeService employeeService)
+        public HomeController(IEmployeeService employeeService)
         {
-            _context = webApiContext;
             _employeeService = employeeService;
         }
 
@@ -51,6 +49,24 @@ namespace SaikiAPI.Controllers
 
 
         }
+
+        [HttpPost]
+        [Route("UploadFile")]
+        public IActionResult UploadFile(IFormFile file)
+        {
+            var res = _employeeService.UploadFile(file);
+
+            if (res)
+            {
+                return Ok("Upload Successful");
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
 
         [HttpGet("UploadYourData")]
         [Authorize]

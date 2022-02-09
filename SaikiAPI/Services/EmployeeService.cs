@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -23,14 +24,16 @@ namespace SaikiAPI.Services
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly JwtSetting _jwtSetting;
+        private readonly BlobServiceClient _blobServiceClient;
 
 
-        public EmployeeService(UserManager<ApplicationUser> userManager, IOptions<JwtSetting> options, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        public EmployeeService(UserManager<ApplicationUser> userManager, IOptions<JwtSetting> options, IConfiguration configuration, IWebHostEnvironment webHostEnvironment, BlobServiceClient blobServiceClient)
         {
             _userManager = userManager;
             _jwtSetting = options.Value;
             _configuration = configuration;
             _webHostEnvironment = webHostEnvironment;
+            _blobServiceClient = blobServiceClient;
         }
 
         public async Task<ApplicationUser> AuthenticateUser(UserCred userCred)
@@ -78,7 +81,6 @@ namespace SaikiAPI.Services
             {
                 throw new ApplicationException("The object graph could not be serialized", ex);
             }
-            // Return the streamed object graph.
             return stream;
         }
 
@@ -86,10 +88,11 @@ namespace SaikiAPI.Services
         { 
             var user = await _userManager.FindByIdAsync(userId);
 
-            BlobServiceClient blobServiceClient = new BlobServiceClient(_configuration.GetSection("Blob").GetValue<string>("ConnectionString"));
+
+            var containerName = _configuration.GetSection("Blob:ContainerName").Value;
             
 
-            var containerClient = blobServiceClient.GetBlobContainerClient("user-data");
+            var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
             containerClient.CreateIfNotExists();
             //Delete if the BLOB is already eisting for the same user_id
             var bolbClient = containerClient.GetBlobClient(String.Format("{0}.xml", userId)).DeleteIfExists();
@@ -165,6 +168,24 @@ namespace SaikiAPI.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public bool UploadFile(IFormFile file)
+        {
+            var containerName = _configuration.GetSection("Blob:ContainerName").Value;
+            var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+            containerClient.CreateIfNotExists();
+            //Delete if the BLOB is already eisting for the same user_id
+            containerClient.GetBlobClient(file.FileName).DeleteIfExists();
+            var result = containerClient.UploadBlob(file.FileName, file.OpenReadStream());
+            if (result.GetRawResponse().Status == 201 && string.Equals(result.GetRawResponse().ReasonPhrase, "Created", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
