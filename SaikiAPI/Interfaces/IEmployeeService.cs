@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SaikiAPI.EntityModels;
+using SaikiAPI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

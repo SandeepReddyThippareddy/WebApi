@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SaikiAPI.EntityModels;
+using SaikiAPI.Models;
 using SaikiAPI.Interfaces;
 using System;
 using System.Threading.Tasks;

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SaikiAPI.Models;
 using System.Linq;
 
-namespace SaikiAPI.EntityModels
+namespace SaikiAPI.Data
 {
     public class WebApiContext : IdentityDbContext<ApplicationUser>
     {
@@ -14,7 +15,6 @@ namespace SaikiAPI.EntityModels
         }
 
         public DbSet<Employee> Employee { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,3 +27,4 @@ namespace SaikiAPI.EntityModels
         }
     }
 }
+

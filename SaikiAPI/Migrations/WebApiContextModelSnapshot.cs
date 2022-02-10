@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SaikiAPI.EntityModels;
+using SaikiAPI.Data;
 
 namespace SaikiAPI.Migrations
 {
@@ -150,7 +150,7 @@ namespace SaikiAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SaikiAPI.EntityModels.ApplicationUser", b =>
+            modelBuilder.Entity("SaikiAPI.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -218,7 +218,7 @@ namespace SaikiAPI.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("SaikiAPI.EntityModels.Employee", b =>
+            modelBuilder.Entity("SaikiAPI.Models.Employee", b =>
                 {
                     b.Property<int>("EmpId")
                         .ValueGeneratedOnAdd()
@@ -253,7 +253,7 @@ namespace SaikiAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SaikiAPI.EntityModels.ApplicationUser", null)
+                    b.HasOne("SaikiAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -262,7 +262,7 @@ namespace SaikiAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SaikiAPI.EntityModels.ApplicationUser", null)
+                    b.HasOne("SaikiAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -277,7 +277,7 @@ namespace SaikiAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SaikiAPI.EntityModels.ApplicationUser", null)
+                    b.HasOne("SaikiAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -286,7 +286,7 @@ namespace SaikiAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SaikiAPI.EntityModels.ApplicationUser", null)
+                    b.HasOne("SaikiAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)

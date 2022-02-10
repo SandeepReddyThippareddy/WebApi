@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SaikiAPI.EntityModels
+namespace SaikiAPI.Models
 {
     [Table("Employee")]
     public class Employee

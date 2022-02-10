@@ -1,4 +1,4 @@
-﻿namespace SaikiAPI.EntityModels
+﻿namespace SaikiAPI.Models
 {
     public class JwtSetting
     {

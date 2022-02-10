@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Azure;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using SaikiAPI.EntityModels;
+using SaikiAPI.Models;
+using SaikiAPI.Data;
 using SaikiAPI.Interfaces;
 using SaikiAPI.Services;
+using SaikiAPI.ServiceExtensions;
 using System;
 using System.Text;
 
@@ -32,7 +32,12 @@ namespace SaikiAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddControllers();
+            // Calling ServiceExtension methods to configure 
+
+            services.ConfigureSqlServerConnection(Configuration);
+
+            services.ConfigureSwagger();
+
 
             services.AddControllers(config =>
             {
@@ -42,16 +47,8 @@ namespace SaikiAPI
                 config.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SaikiAPI", Version = "v1" });
-            });
-
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                //To configure the passowrd characteristics
-                //options.Password.RequiredLength = 10;
-                //options.Password.RequiredUniqueChars = 3;
 
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
@@ -89,9 +86,10 @@ namespace SaikiAPI
             });
 
 
+            services.ConfigureRepositoryPattern();
+
             services.AddAzureClients(options => options.AddBlobServiceClient(Configuration.GetSection("Blob:ConnectionString").Value));
 
-            services.AddDbContext<WebApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
