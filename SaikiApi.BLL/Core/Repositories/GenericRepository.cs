@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SaikiAPI.Core.IRepositories;
-using SaikiAPI.Data;
+using WebAPI.BLL.Core.IRepositories;
+using WebAPI.BLL.Data;
 
-namespace SaikiAPI.Core.Repositories
+namespace WebAPI.BLL.Core.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

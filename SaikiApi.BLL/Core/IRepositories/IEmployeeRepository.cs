@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using SaikiAPI.Models;
+using Microsoft.AspNetCore.Http;
+using WebAPI.BLL.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SaikiAPI.Interfaces
+namespace WebAPI.BLL.Core.IRepositories
 {
-    public interface IEmployeeService
+    public interface IEmployeeRepository : IGenericRepository<Employee>
     {
         Task<ApplicationUser> AuthenticateUser(UserCred userCred);
         Task<bool> UploadDataToAzure(string userId);

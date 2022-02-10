@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SaikiAPI.Core.IRepositories
+namespace WebAPI.BLL.Core.IRepositories
 {
     public interface IUnitOfWork
     {
         IUserRepository UserRepository {get;}
         IEmployeeRepository EmployeeRepository {get;}
-        Task Complete();
+        Task<bool> Complete();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace SaikiAPI.Models
+namespace WebAPI.BLL.Models
 {
     [Serializable]
     public class ApplicationUser : IdentityUser

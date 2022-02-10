@@ -9,15 +9,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using SaikiAPI.Models;
-using SaikiAPI.Data;
-using SaikiAPI.Interfaces;
-using SaikiAPI.Services;
-using SaikiAPI.ServiceExtensions;
+using WebAPI.BLL.Models;
+using WebAPI.BLL.Data;
+using WebAPI.ServiceExtensions;
 using System;
 using System.Text;
 
-namespace SaikiAPI
+namespace WebAPI
 {
     public class Startup
     {
@@ -56,7 +54,6 @@ namespace SaikiAPI
 
             }).AddEntityFrameworkStores<WebApiContext>();
 
-            services.AddScoped<IEmployeeService, EmployeeService>();
 
             var jwtSetting = Configuration.GetSection("JWTSettings");
 
@@ -85,8 +82,10 @@ namespace SaikiAPI
                 };
             });
 
+            
 
             services.ConfigureRepositoryPattern();
+            
 
             services.AddAzureClients(options => options.AddBlobServiceClient(Configuration.GetSection("Blob:ConnectionString").Value));
 

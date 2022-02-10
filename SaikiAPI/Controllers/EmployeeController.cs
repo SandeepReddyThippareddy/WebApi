@@ -2,13 +2,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SaikiAPI.Core.IRepositories;
+using WebAPI.BLL.Core.IRepositories;
 
-namespace SaikiAPI.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     public class EmployeeController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

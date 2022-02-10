@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SaikiAPI.Models
+namespace WebAPI.BLL.Models
 {
     [Table("Employee")]
     public class Employee

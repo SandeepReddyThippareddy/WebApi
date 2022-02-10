@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SaikiAPI.Core.IRepositories
+namespace WebAPI.BLL.Core.IRepositories
 {
     public interface IGenericRepository<T> where T : class
     {

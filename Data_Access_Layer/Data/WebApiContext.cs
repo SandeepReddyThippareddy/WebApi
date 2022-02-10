@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SaikiAPI.Models;
+using WebAPI.BLL.Models;
 using System.Linq;
 
-namespace SaikiAPI.Data
+namespace WebAPI.BLL.Data
 {
     public class WebApiContext : IdentityDbContext<ApplicationUser>
     {

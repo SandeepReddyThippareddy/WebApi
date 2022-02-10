@@ -1,24 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SaikiAPI.Models;
-using SaikiAPI.Interfaces;
+using WebAPI.BLL.Models;
+using WebAPI.BLL.Core.IRepositories;
 using System;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace SaikiAPI.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class HomeController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(IEmployeeService employeeService)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _employeeService = employeeService;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("Authenticate")]
@@ -29,7 +29,7 @@ namespace SaikiAPI.Controllers
 
             try
             {
-                var result = await _employeeService.AuthenticateUser(userCred);
+                var result = await _unitOfWork.EmployeeRepository.AuthenticateUser(userCred);
 
                 if (result.BearerToken != null)
                 {
@@ -54,7 +54,7 @@ namespace SaikiAPI.Controllers
         [Route("UploadFile")]
         public IActionResult UploadFile(IFormFile file)
         {
-            var res = _employeeService.UploadFile(file);
+            var res = _unitOfWork.EmployeeRepository.UploadFile(file);
 
             if (res)
             {
@@ -72,7 +72,7 @@ namespace SaikiAPI.Controllers
         [Authorize]
         public async Task<IActionResult> UploadYourData(string userId)
         {
-            var res = await _employeeService.UploadDataToAzure(userId);
+            var res = await _unitOfWork.EmployeeRepository.UploadDataToAzure(userId);
 
             if (res)
             {
@@ -93,7 +93,7 @@ namespace SaikiAPI.Controllers
         {
             try
             {
-                var res = _employeeService.DownloadDataFromAzure(userId);
+                var res = _unitOfWork.EmployeeRepository.DownloadDataFromAzure(userId);
 
                 if (res != null)
                 {
@@ -124,7 +124,7 @@ namespace SaikiAPI.Controllers
         {
             try
             {
-                var userData = await _employeeService.GetUserData(userId);
+                var userData = await _unitOfWork.EmployeeRepository.GetUserData(userId);
                 return Ok(userData);
             }
             catch (Exception ex) when (ex.Message.Contains("User does not exists"))
@@ -142,7 +142,7 @@ namespace SaikiAPI.Controllers
             try
             {
                 int? nextCursor = 0;
-                var userData = _employeeService.GetUserData(@params, out nextCursor);
+                var userData = _unitOfWork.EmployeeRepository.GetUserData(@params, out nextCursor);
 
                 Response.Headers.Add("X-Pagination", $"Next-Cursor = {nextCursor}");
                 return Ok(userData);

@@ -2,11 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using SaikiAPI.Core.IRepositories;
-using SaikiAPI.Data;
-using SaikiAPI.Models;
+using WebAPI.BLL.Core.IRepositories;
+using WebAPI.BLL.Data;
 
-namespace SaikiAPI.ServiceExtensions
+namespace WebAPI.ServiceExtensions
 {
     public static class ServiceExtensions
     {

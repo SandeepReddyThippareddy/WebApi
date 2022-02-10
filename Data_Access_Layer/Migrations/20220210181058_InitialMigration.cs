@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SaikiAPI.Migrations
+namespace Data_Access_Layer.Migrations
 {
     public partial class InitialMigration : Migration
     {
@@ -45,22 +45,6 @@ namespace SaikiAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employee",
-                columns: table => new
-                {
-                    EmpId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmpName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Designation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employee", x => x.EmpId);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,9 +209,6 @@ namespace SaikiAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Employee");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

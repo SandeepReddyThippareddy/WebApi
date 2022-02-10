@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using SaikiAPI.Models;
+using WebAPI.BLL.Models;
 
-namespace SaikiAPI.Core.IRepositories
+namespace WebAPI.BLL.Core.IRepositories
 {
     public interface IUserRepository : IGenericRepository<ApplicationUser>
     {

@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SaikiAPI.Core.IRepositories;
-using SaikiAPI.Data;
-using SaikiAPI.Models;
+using WebAPI.BLL.Core.IRepositories;
+using WebAPI.BLL.Data;
+using WebAPI.BLL.Models;
 
-namespace SaikiAPI.Core.Repositories
+namespace WebAPI.BLL.Core.Repositories
 {
     public class UserRepository : GenericRepository<ApplicationUser>, IUserRepository
     {

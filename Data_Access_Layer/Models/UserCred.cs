@@ -1,4 +1,4 @@
-﻿namespace SaikiAPI.Models
+﻿namespace WebAPI.BLL.Models
 {
     public class UserCred
     {
