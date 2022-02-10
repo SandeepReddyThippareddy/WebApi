@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WebAPI.BLL.Core.IConfiguration;
 using WebAPI.BLL.Core.IRepositories;
 using WebAPI.BLL.Core.Repositories;
 using WebAPI.BLL.Models;

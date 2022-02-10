@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.BLL.Models;
-using WebAPI.BLL.Core.IRepositories;
 using System;
 using System.Threading.Tasks;
 using System.Xml;
+using WebAPI.BLL.Core.IConfiguration;
 
 namespace WebAPI.Controllers
 {

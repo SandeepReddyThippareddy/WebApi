@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebAPI.BLL.Core.IRepositories;
+using WebAPI.BLL.Core.IConfiguration;
 
 namespace WebAPI.Controllers
 {

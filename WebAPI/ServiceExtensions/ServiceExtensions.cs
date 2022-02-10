@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using WebAPI.BLL.Core.IRepositories;
+using WebAPI.BLL.Core.IConfiguration;
 using WebAPI.BLL.Data;
 
 namespace WebAPI.ServiceExtensions
@@ -19,7 +19,7 @@ namespace WebAPI.ServiceExtensions
         {
              services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SaikiAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
         }
 

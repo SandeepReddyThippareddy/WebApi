@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web_API", "SaikiAPI\Web_API.csproj", "{A13CB71D-5CFB-4CBC-BCEC-C6BEEA3E98F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web_API", "WebAPI\Web_API.csproj", "{A13CB71D-5CFB-4CBC-BCEC-C6BEEA3E98F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business_Logic_Layer", "SaikiApi.BLL\Business_Logic_Layer.csproj", "{1160AA13-1DA8-46B1-8F7E-AF80DA9FC83B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business_Logic_Layer", "Business_Logic_Layer\Business_Logic_Layer.csproj", "{1160AA13-1DA8-46B1-8F7E-AF80DA9FC83B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data_Access_Layer", "Data_Access_Layer\Data_Access_Layer.csproj", "{8ADEBF1D-B091-4C75-BE71-4CC6A7CC28BE}"
 EndProject

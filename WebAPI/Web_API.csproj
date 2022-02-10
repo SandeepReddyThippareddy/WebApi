@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SaikiApi.BLL\Business_Logic_Layer.csproj" />
+    <ProjectReference Include="..\Business_Logic_Layer\Business_Logic_Layer.csproj" />
   </ItemGroup>
 
 
