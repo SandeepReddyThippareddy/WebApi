@@ -33,7 +33,7 @@ namespace WebAPI.BLL.Data
 
         //Another way of instantiating the repositories.
         //public IUserRepository UserRepository => new UserRepository(_context, _logger);
-        public async Task<bool> Complete()
+        public async Task<bool> CompleteAsync()
         {
            return await _context.SaveChangesAsync() > 0;
         }

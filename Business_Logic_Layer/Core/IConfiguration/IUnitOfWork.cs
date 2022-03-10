@@ -7,6 +7,6 @@ namespace WebAPI.BLL.Core.IConfiguration
     {
         IUserRepository UserRepository {get;}
         IEmployeeRepository EmployeeRepository {get;}
-        Task<bool> Complete();
+        Task<bool> CompleteAsync();
     }
 }

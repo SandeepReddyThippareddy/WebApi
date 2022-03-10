@@ -14,6 +14,7 @@ using WebAPI.BLL.Data;
 using WebAPI.ServiceExtensions;
 using System;
 using System.Text;
+using Web_API.SyncDataService.Http;
 
 namespace WebAPI
 {
@@ -36,6 +37,7 @@ namespace WebAPI
 
             services.ConfigureSwagger();
 
+            services.AddHttpClient<IEmployeeDataClient, HttpCommandDataClient>(opt => opt.BaseAddress = new Uri("http://dummy.restapiexample.com/api/v1/"));
 
             services.AddControllers(config =>
             {
@@ -44,6 +46,8 @@ namespace WebAPI
                                  .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
+
+            services.AddAutoMapper(assemblies: AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
